@@ -7,8 +7,8 @@ import { ToastProvider } from "@/components/ui/toast"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'MiddleX',
+  description: 'Created by Abubakar Abdullahi',
 }
 
 export default function RootLayout({
