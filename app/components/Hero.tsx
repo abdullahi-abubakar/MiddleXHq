@@ -8,7 +8,7 @@ export default function Hero() {
           Empowering Digital Success with Top-Tier Technology Expertise
         </h1>
         <p className="text-xl mb-8 max-w-3xl mx-auto">
-          X is a global provider of comprehensive technology services, delivering innovative solutions that drive
+          MiddleX is a global provider of comprehensive technology services, delivering innovative solutions that drive
           excellence across industries.
         </p>
         <Link
