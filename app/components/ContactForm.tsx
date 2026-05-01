@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 
 import { submitContactForm, type ContactFormState } from "@/app/actions/submit-form"
@@ -14,13 +15,13 @@ function FieldError({ messages }: { messages?: string[] }) {
   return <p className="mt-1.5 text-sm text-red-300">{messages[0]}</p>
 }
 
-function SubmitButton() {
+function SubmitButton({ disabledSuccess }: { disabledSuccess?: boolean }) {
   const { pending } = useFormStatus()
   return (
     <Button
       type="submit"
       size="lg"
-      disabled={pending}
+      disabled={pending || disabledSuccess}
       className="w-full rounded-full bg-primary font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
     >
       {pending ? "Sending…" : "Send message"}
@@ -30,10 +31,26 @@ function SubmitButton() {
 
 export default function ContactForm() {
   const [state, formAction] = useFormState(submitContactForm, initialState)
+  const didRedirect = useRef(false)
+
+  useEffect(() => {
+    if (!state.success || didRedirect.current) return
+    didRedirect.current = true
+    window.location.assign(state.redirectUrl)
+  }, [state])
 
   return (
     <form action={formAction} className="space-y-6">
-      {state.message ? (
+      {state.success ? (
+        <div
+          role="status"
+          className="rounded-xl border border-primary/40 bg-primary/15 px-4 py-3 text-sm text-white"
+        >
+          Thanks — your message was sent. Opening middlexhq.com…
+        </div>
+      ) : null}
+
+      {!state.success && state.message ? (
         <div
           role="alert"
           className="rounded-xl border border-red-400/40 bg-red-950/40 px-4 py-3 text-sm text-red-100"
@@ -109,7 +126,7 @@ export default function ContactForm() {
         <FieldError messages={state.errors?.message} />
       </div>
 
-      <SubmitButton />
+      <SubmitButton disabledSuccess={state.success} />
     </form>
   )
 }

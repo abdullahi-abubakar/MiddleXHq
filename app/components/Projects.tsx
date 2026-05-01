@@ -1,25 +1,29 @@
 import Link from "next/link"
-import { Layers, Palette, Rocket } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-const placeholders = [
-  {
-    title: "Brand & storytelling site",
-    detail: "Launch narratives, CMS flexibility, and performance budgets that hold under traffic spikes.",
-    icon: Palette,
-  },
-  {
-    title: "Product experience",
-    detail: "Design systems, dashboards, and flows built for real usage—not just mockups.",
-    icon: Layers,
-  },
-  {
-    title: "Go-to-market builds",
-    detail: "Landing architecture, experiments, and instrumentation wired for learning quickly.",
-    icon: Rocket,
-  },
-]
+import ProjectSlideshowCard from "./ProjectSlideshowCard"
+
+const safewatchSlides = [
+  { src: "/projects/safewatch/slide-1.png", alt: "Safewatch product screenshot 1" },
+  { src: "/projects/safewatch/slide-2.png", alt: "Safewatch product screenshot 2" },
+  { src: "/projects/safewatch/slide-3.png", alt: "Safewatch product screenshot 3" },
+  { src: "/projects/safewatch/slide-4.png", alt: "Safewatch product screenshot 4" },
+] as const
+
+const middlexSlides = [
+  { src: "/projects/middlex/slide-1.png", alt: "MiddleX website screenshot 1" },
+  { src: "/projects/middlex/slide-2.png", alt: "MiddleX website screenshot 2" },
+  { src: "/projects/middlex/slide-3.png", alt: "MiddleX website screenshot 3" },
+  { src: "/projects/middlex/slide-4.png", alt: "MiddleX website screenshot 4" },
+] as const
+
+const restaurantSlides = [
+  { src: "/projects/restaurant/slide-1.png", alt: "Restaurant project screenshot 1" },
+  { src: "/projects/restaurant/slide-2.png", alt: "Restaurant project screenshot 2" },
+  { src: "/projects/restaurant/slide-3.png", alt: "Restaurant project screenshot 3" },
+  { src: "/projects/restaurant/slide-4.png", alt: "Restaurant project screenshot 4" },
+] as const
 
 export default function Projects() {
   return (
@@ -28,28 +32,33 @@ export default function Projects() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-primary">Work</p>
           <h2 className="font-display mt-3 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
-            We are actively taking on flagship website and product engagements
+            Flagship website and product engagements
           </h2>
           <p className="mt-4 text-muted-foreground leading-relaxed">
-            Case studies will live here as launches wrap. If you want MiddleX on your next brief, send context—we reply
-            with approach, timeline options, and a sane estimate range.
+            A sample of recent builds—open any card for a four-slide walkthrough. Want MiddleX on your next brief? Send
+            context and we will reply with approach, timelines, and a clear estimate range.
           </p>
         </div>
 
         <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">
-          {placeholders.map((card) => (
-            <div
-              key={card.title}
-              className="flex flex-col rounded-2xl border border-dashed border-border bg-card/80 p-7 text-left shadow-sm backdrop-blur-sm"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-foreground">
-                <card.icon className="h-5 w-5" aria-hidden />
-              </div>
-              <h3 className="font-display mt-5 text-lg font-semibold tracking-tight">{card.title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{card.detail}</p>
-              <p className="mt-6 font-display text-xs font-semibold uppercase tracking-widest text-primary">Slot open</p>
-            </div>
-          ))}
+          <ProjectSlideshowCard
+            iconKey="safewatch"
+            title="Safewatch"
+            detail="Safety and monitoring experience—dashboard flows, alerts, and operational clarity for teams on call."
+            slides={[...safewatchSlides]}
+          />
+          <ProjectSlideshowCard
+            iconKey="middlex"
+            title="MiddleX"
+            detail="Brand-forward web presence and messaging aligned with how you show up to partners and customers."
+            slides={[...middlexSlides]}
+          />
+          <ProjectSlideshowCard
+            iconKey="restaurant"
+            title="Restaurant"
+            detail="Hospitality-focused digital experience—menus, reservations vibe, and visuals that match the room."
+            slides={[...restaurantSlides]}
+          />
         </div>
 
         <div className="mx-auto mt-14 max-w-3xl rounded-2xl border border-border bg-gradient-to-br from-primary/10 via-card to-card p-8 text-center shadow-sm md:p-10">

@@ -1,6 +1,5 @@
 "use server"
 
-import { redirect } from "next/navigation"
 import { z } from "zod"
 
 const schema = z.object({
@@ -10,11 +9,13 @@ const schema = z.object({
   message: z.string().trim().min(10, "Please add a bit more detail (at least 10 characters)").max(10000),
 })
 
-export type ContactFormState = {
-  success: false
-  errors?: Partial<Record<"name" | "phoneNumber" | "email" | "message", string[]>>
-  message?: string
-}
+export type ContactFormState =
+  | { success: true; redirectUrl: string }
+  | {
+      success: false
+      errors?: Partial<Record<"name" | "phoneNumber" | "email" | "message", string[]>>
+      message?: string
+    }
 
 const DEFAULT_SUCCESS_URL = "https://www.middlexhq.com"
 
@@ -86,7 +87,10 @@ export async function submitContactForm(
   if (!parsed.success) {
     return {
       success: false,
-      errors: parsed.error.flatten().fieldErrors as ContactFormState["errors"],
+      errors: parsed.error.flatten().fieldErrors as Extract<
+        ContactFormState,
+        { success: false }
+      >["errors"],
     }
   }
 
@@ -106,7 +110,7 @@ export async function submitContactForm(
         "[contact] CONTACT_FORM_DEV_MOCK: skipping email (no Resend). Submission:",
         { name, phoneNumber, email, messagePreview: message.slice(0, 200) }
       )
-      redirect(successRedirectUrl())
+      return { success: true, redirectUrl: successRedirectUrl() }
     }
 
     console.error("[contact] Missing Resend env (true = set):", {
@@ -167,5 +171,5 @@ export async function submitContactForm(
     }
   }
 
-  redirect(successRedirectUrl())
+  return { success: true, redirectUrl: successRedirectUrl() }
 }
