@@ -32,6 +32,27 @@ function escapeHtml(text: string): string {
     .replace(/'/g, "&#39;")
 }
 
+/** Strip wrapping quotes (dotenv / Vercel often keeps `"..."` inside the value — Resend rejects that). */
+function normalizeEnvValue(raw: string | undefined): string | undefined {
+  if (raw == null) return undefined
+  let v = raw.trim()
+  while (
+    (v.startsWith('"') && v.endsWith('"')) ||
+    (v.startsWith("'") && v.endsWith("'"))
+  ) {
+    v = v.slice(1, -1).trim()
+  }
+  v = v.replace(/\u201c|\u201d/g, '"').replace(/\u2018|\u2019/g, "'").trim()
+  return v === "" ? undefined : v
+}
+
+/** Resend expects `addr@domain` or `Name <addr@domain>`. */
+function isValidResendFrom(from: string): boolean {
+  const plain = /^[^\s<>]+@[^\s<>]+\.[^\s<>]+$/.test(from)
+  const withName = /^[^<>]+\s<[^\s<>]+@[^\s<>]+\.[^\s<>]+>$/.test(from)
+  return plain || withName
+}
+
 function missingEnvMessage(): string {
   const onVercel = process.env.VERCEL === "1"
 
@@ -71,9 +92,9 @@ export async function submitContactForm(
 
   const { name, phoneNumber, email, message } = parsed.data
 
-  const apiKey = process.env.RESEND_API_KEY?.trim()
-  const from = process.env.RESEND_FROM_EMAIL?.trim()
-  const to = process.env.CONTACT_INBOX_EMAIL?.trim()
+  const apiKey = normalizeEnvValue(process.env.RESEND_API_KEY)
+  const from = normalizeEnvValue(process.env.RESEND_FROM_EMAIL)
+  const to = normalizeEnvValue(process.env.CONTACT_INBOX_EMAIL)
 
   const devMock =
     process.env.NODE_ENV === "development" &&
@@ -99,6 +120,14 @@ export async function submitContactForm(
     return {
       success: false,
       message: missingEnvMessage(),
+    }
+  }
+
+  if (!isValidResendFrom(from)) {
+    return {
+      success: false,
+      message:
+        'RESEND_FROM_EMAIL must be a plain address (you@domain.com) or exactly: Name <you@domain.com>. If it contains spaces, wrap the whole value in quotes in .env.local / Vercel — e.g. RESEND_FROM_EMAIL="MiddleX <onboarding@resend.dev>". Until middlexhq.com is verified in Resend, use an address Resend gives you for testing.',
     }
   }
 
