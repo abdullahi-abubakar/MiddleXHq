@@ -21,8 +21,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/65">
-              Boutique engineering for websites, platforms, and data foundations—with the polish clients expect from a
-              world-class studio.
+              Digital agency Lagos Island businesses use as a technical bench—and a Nigeria-wide partner for websites,
+              platforms, and data foundations—with boutique polish and pragmatic delivery.
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-center text-xs text-white/45 md:flex-row md:items-center md:justify-between md:text-left">
           <p>&copy; {new Date().getFullYear()} MiddleXhq. All rights reserved.</p>
-          <p>Crafted for teams who care how the internet feels.</p>
+          <p>Lagos-first studio · Serving ambitious teams across Nigeria.</p>
         </div>
       </div>
     </footer>

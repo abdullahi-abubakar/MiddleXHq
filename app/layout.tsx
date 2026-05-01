@@ -16,10 +16,16 @@ const outfit = Outfit({
   display: "swap",
 })
 
+const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.middlexhq.com"
+
 export const metadata: Metadata = {
-  title: "MiddleX — Websites, platforms & data that ship",
+  metadataBase: new URL(siteOrigin),
+  title: {
+    default: "MiddleX — Web Design & Data Engineering Agency in Lagos",
+    template: "%s · MiddleX",
+  },
   description:
-    "We partner with teams to design and build standout websites, products, and AI-ready data foundations—from discovery to launch.",
+    "MiddleX builds high-performance websites, data pipelines, and AI-powered platforms for ambitious teams in Lagos and across Nigeria. Fixed-price engagements. Biweekly demos.",
 }
 
 export default function RootLayout({

@@ -17,12 +17,12 @@ export default function Hero() {
           </div>
 
           <h1 className="font-display animation-delay-150 animate-fade-up text-balance text-4xl font-semibold leading-[1.1] tracking-tight opacity-0 [animation-fill-mode:forwards] md:text-5xl lg:text-6xl">
-            Ship websites and platforms clients remember—and measure.
+            Web design agency Lagos teams trust for launches that last—and scale nationwide.
           </h1>
 
           <p className="animation-delay-200 animate-fade-up mx-auto mt-6 max-w-2xl text-pretty text-lg text-white/72 opacity-0 [animation-fill-mode:forwards] md:text-xl">
-            MiddleX partners with ambitious teams to design, build, and evolve digital products—from marketing sites to
-            data-heavy backends—with craft you can feel in the details.
+            MiddleX is a web development company Nigeria organizations choose when marketing sites, backends, and
+            analytics must ship together—fixed-price engagements, biweekly demos, and craft you can feel in the details.
           </p>
 
           <div className="animation-delay-300 animate-fade-up mt-10 flex flex-col items-center justify-center gap-3 opacity-0 [animation-fill-mode:forwards] sm:flex-row sm:gap-4">

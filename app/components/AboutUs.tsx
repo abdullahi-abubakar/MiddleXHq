@@ -19,14 +19,14 @@ export default function AboutUs() {
           <div className="lg:col-span-7">
             <div className="space-y-5 text-muted-foreground leading-relaxed">
               <p>
-                MiddleX aims to be a steady partner in digital transformation—shipping tailored work across data
-                engineering, applied AI, software development, and growth foundations for B2B, B2C, and public-sector
-                teams.
+                We deliver data engineering Nigeria organizations depend on—trustworthy pipelines, modeling, and
+                observability—alongside applied AI and product-grade software. We aim to be a steady partner in digital
+                transformation for B2B, B2C, and public-sector teams that cannot afford mystery scopes.
               </p>
               <p>
                 Our bias is toward clarity: crisp specs, honest estimates, and interfaces your customers actually feel.
-                Whether you need a flagship marketing site or a platform your engineers will thank you for, we meet you
-                where you are and raise the bar from there.
+                When you want an AI development company Nigeria founders can talk to without jargon—or a flagship site
+                your engineers will thank you for—we meet you where you are and raise the bar from there.
               </p>
             </div>
             <Button asChild variant="outline" className="mt-8 rounded-full">
