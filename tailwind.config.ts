@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
     darkMode: ["class"],
@@ -10,6 +11,10 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
+  			display: ["var(--font-display)", ...defaultTheme.fontFamily.sans],
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -83,11 +88,27 @@ const config: Config = {
   				to: {
   					height: '0'
   				}
+  			},
+  			'fade-up': {
+  				from: {
+  					opacity: '0',
+  					transform: 'translateY(16px)'
+  				},
+  				to: {
+  					opacity: '1',
+  					transform: 'translateY(0)'
+  				}
+  			},
+  			'pulse-soft': {
+  				'0%, 100%': { opacity: '0.45' },
+  				'50%': { opacity: '0.85' }
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'fade-up': 'fade-up 0.6s ease-out forwards',
+  			'pulse-soft': 'pulse-soft 4s ease-in-out infinite',
   		}
   	}
   },
