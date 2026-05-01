@@ -32,6 +32,25 @@ function escapeHtml(text: string): string {
     .replace(/'/g, "&#39;")
 }
 
+function missingEnvMessage(): string {
+  const onVercel = process.env.VERCEL === "1"
+
+  if (onVercel) {
+    return (
+      "The server still cannot see your email settings. In Vercel: Project → Settings → Environment Variables — add " +
+      "RESEND_API_KEY, RESEND_FROM_EMAIL, and CONTACT_INBOX_EMAIL (exact names, non-empty values). " +
+      "Enable them for the environment you use (Production and/or Preview), click Save, then Redeploy the latest deployment. " +
+      "Check Deployment → Logs and search for \"[contact]\" if it persists."
+    )
+  }
+
+  return (
+    "Add RESEND_API_KEY, RESEND_FROM_EMAIL, and CONTACT_INBOX_EMAIL to a file named `.env.local` in the MiddleXHq folder " +
+    "(copy from `.env.example`), then restart `npm run dev`. " +
+    "Variables you set only on Vercel are not available on localhost — run `vercel env pull .env.local` in MiddleXHq to download them."
+  )
+}
+
 export async function submitContactForm(
   _prevState: ContactFormState | undefined,
   formData: FormData
@@ -69,10 +88,17 @@ export async function submitContactForm(
       redirect(successRedirectUrl())
     }
 
+    console.error("[contact] Missing Resend env (true = set):", {
+      RESEND_API_KEY: Boolean(apiKey),
+      RESEND_FROM_EMAIL: Boolean(from),
+      CONTACT_INBOX_EMAIL: Boolean(to),
+      vercel: process.env.VERCEL === "1",
+      nodeEnv: process.env.NODE_ENV,
+    })
+
     return {
       success: false,
-      message:
-        "Contact form is not configured. Create a file named `.env.local` in the MiddleXHq folder (copy from `.env.example`), set RESEND_API_KEY, RESEND_FROM_EMAIL, and CONTACT_INBOX_EMAIL, then restart the dev server.",
+      message: missingEnvMessage(),
     }
   }
 
